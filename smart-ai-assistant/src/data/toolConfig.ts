@@ -41,8 +41,8 @@ export const ALL_TOOLS: ToolConfig[] = [
   },
   {
     id: 'image', page: 'tool-image', icon: '🎨',
-    name: 'Image Creator', shortName: 'Image',
-    description: 'Generate AI images or get detailed prompts for Midjourney, DALL-E and Stable Diffusion.',
+    name: 'Image Prompt Creator', shortName: 'Image',
+    description: 'Generate AI images prompt or get detailed prompts for Midjourney, DALL-E and Stable Diffusion.',
     inputLabel: 'Describe your image',
     inputPlaceholder: 'e.g. A futuristic city at night with neon lights, flying cars, cyberpunk style…',
     outputLabel: 'Generated Image & Prompts',

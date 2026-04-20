@@ -13,7 +13,7 @@ const PAGE_TITLES: Partial<Record<Page, string>> = {
   quiz:              '🧠 AI Quiz',
   'tool-content':    '📝 Content Generator',
   'tool-code':       '💻 Code Assistant',
-  'tool-image':      '🎨 Image Creator',
+  'tool-image':      '🎨 Image Prompt Creator',
   'tool-task':       '📋 Task Manager AI',
   'tool-story':      '📖 Story Creator',
   'tool-summary':    '📄 Text Summarizer',

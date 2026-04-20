@@ -92,6 +92,6 @@ export const STATUS_MESSAGES = {
   noKey:          ()          => `No API key configured. Add your free Gemini key in ⚙️ Settings.`,
   safetyBlock:    ()          => `Request blocked by AI safety filters. Please rephrase.`,
   imageGenStart:  ()          => `Starting image generation…`,
-  imageTrying:    (p: string) => `Trying ${p} for image generation…`,
+  imageTrying:    (p: string) => `Trying ${p} for image prompt generation…`,
   imageDescribe:  ()          => `Generating AI art prompts & description…`,
 };

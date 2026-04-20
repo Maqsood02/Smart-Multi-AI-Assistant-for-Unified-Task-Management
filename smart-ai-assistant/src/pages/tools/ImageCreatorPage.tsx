@@ -88,8 +88,8 @@ export function ImageCreatorPage() {
             🎨
           </div>
           <div>
-            <h2 style={{ color:'var(--accent3)' }}>Image Creator</h2>
-            <p>Generate AI images with Cloudflare SD or HuggingFace. Get art prompts for Midjourney & DALL-E.</p>
+            <h2 style={{ color:'var(--accent3)' }}>Image prompt Creator</h2>
+            <p>Generate AI images prompt with Cloudflare SD or HuggingFace. Get art prompts for Midjourney & DALL-E.</p>
           </div>
         </div>
       </div>

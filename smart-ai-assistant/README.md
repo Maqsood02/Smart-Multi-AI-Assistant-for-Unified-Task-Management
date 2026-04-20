@@ -106,16 +106,16 @@ smart-ai-project/
 
 | # | Tool | Type | Voice |
 |---|------|------|-------|
-| 1 | 📝 Content Generator | Existing | ✅ |
-| 2 | 💻 Code Assistant    | Existing | ✅ |
-| 3 | 🎨 Image Creator     | Existing | ✅ |
-| 4 | 📋 Task Manager AI   | Existing | ✅ |
-| 5 | 📖 Story Creator     | **NEW**  | ✅ |
-| 6 | 📄 Text Summarizer   | **NEW**  | ✅ |
-| 7 | 🖼️ Image Summarizer  | **NEW**  | ✅ |
-| 8 | 🔍 Code Checker      | **NEW**  | ✅ |
-| 9 | 🧑 Text Humanizer    | **NEW**  | ✅ |
-| 10| ✏️ Grammar Fixer     | **NEW**  | ✅ |
+| 1 | 📝 Content Generator        | Existing | ✅ |
+| 2 | 💻 Code Assistant           | Existing | ✅ |
+| 3 | 🎨 Image prompt Creator     | Existing | ✅ |
+| 4 | 📋 Task Manager AI          | Existing | ✅ |
+| 5 | 📖 Story Creator            | **NEW**  | ✅ |
+| 6 | 📄 Text Summarizer          | **NEW**  | ✅ |
+| 7 | 🖼️ Image Summarizer         | **NEW**  | ✅ |
+| 8 | 🔍 Code Checker             | **NEW**  | ✅ |
+| 9 | 🧑 Text Humanizer           | **NEW**  | ✅ |
+| 10| ✏️ Grammar Fixer            | **NEW**  | ✅ |
 
 ---
 
