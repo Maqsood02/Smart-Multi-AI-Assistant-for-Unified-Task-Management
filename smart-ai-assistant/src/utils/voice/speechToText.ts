@@ -1,10 +1,8 @@
 // ════════════════════════════════════════════════════════════
-//  VOICE INPUT — Web Speech API hook
-//  Works in Chrome, Edge. Graceful fallback for Firefox.
+//  VOICE INPUT — Web Speech API hook (FIXED)
 // ════════════════════════════════════════════════════════════
 import { useState, useRef, useCallback, useEffect } from 'react';
 
-// Extend window type for webkit prefix
 declare global {
   interface Window {
     SpeechRecognition: typeof SpeechRecognition;
@@ -23,10 +21,14 @@ export interface UseSpeechToTextReturn {
 }
 
 export function useSpeechToText(): UseSpeechToTextReturn {
-  const [transcript,   setTranscript]   = useState('');
-  const [isListening,  setIsListening]  = useState(false);
-  const [error,        setError]        = useState('');
+  const [transcript, setTranscript] = useState('');
+  const [isListening, setIsListening] = useState(false);
+  const [error, setError] = useState('');
+
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+
+  // ✅ FIX: persistent final transcript (prevents duplication)
+  const finalTranscriptRef = useRef('');
 
   const SpeechRecognitionAPI =
     typeof window !== 'undefined'
@@ -51,36 +53,47 @@ export function useSpeechToText(): UseSpeechToTextReturn {
 
     setError('');
     setTranscript('');
+    finalTranscriptRef.current = ''; // ✅ reset properly
 
     const recognition = new SpeechRecognitionAPI();
-    recognition.continuous     = true;
+    recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.lang           = 'en-US';
+    recognition.lang = 'en-US';
     recognition.maxAlternatives = 1;
 
     recognition.onstart = () => setIsListening(true);
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       let interim = '';
-      let final   = '';
+
       for (let i = event.resultIndex; i < event.results.length; i++) {
         const text = event.results[i][0].transcript;
-        if (event.results[i].isFinal) final += text;
-        else interim += text;
+
+        if (event.results[i].isFinal) {
+          // ✅ only add final ONCE
+          finalTranscriptRef.current += text + ' ';
+        } else {
+          // ✅ interim should NOT accumulate
+          interim = text;
+        }
       }
-      setTranscript(prev => prev + final + interim);
+
+      // ✅ replace transcript instead of appending
+      setTranscript(finalTranscriptRef.current + interim);
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
       const messages: Record<string, string> = {
-        'not-allowed':     'Microphone access denied. Please allow microphone in browser settings.',
-        'no-speech':       'No speech detected. Try speaking closer to the microphone.',
-        'network':         'Network error during voice recognition.',
-        'audio-capture':   'No microphone found. Please connect a microphone.',
-        'aborted':         ''
+        'not-allowed': 'Microphone access denied. Please allow microphone in browser settings.',
+        'no-speech': 'No speech detected. Try speaking closer to the microphone.',
+        'network': 'Network error during voice recognition.',
+        'audio-capture': 'No microphone found. Please connect a microphone.',
+        'aborted': ''
       };
+
       const msg = messages[event.error] ?? `Voice error: ${event.error}`;
       if (msg) setError(msg);
+
       setIsListening(false);
     };
 
@@ -90,10 +103,24 @@ export function useSpeechToText(): UseSpeechToTextReturn {
     recognition.start();
   }, [SpeechRecognitionAPI]);
 
-  const clearTranscript = useCallback(() => setTranscript(''), []);
+  const clearTranscript = useCallback(() => {
+    setTranscript('');
+    finalTranscriptRef.current = ''; // ✅ also clear stored final
+  }, []);
 
-  // Cleanup on unmount
-  useEffect(() => () => { recognitionRef.current?.stop(); }, []);
+  useEffect(() => {
+    return () => {
+      recognitionRef.current?.stop();
+    };
+  }, []);
 
-  return { transcript, isListening, isSupported, error, startListening, stopListening, clearTranscript };
+  return {
+    transcript,
+    isListening,
+    isSupported,
+    error,
+    startListening,
+    stopListening,
+    clearTranscript
+  };
 }

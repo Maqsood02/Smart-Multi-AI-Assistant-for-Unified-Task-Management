@@ -170,7 +170,7 @@ export function Dashboard() {
         🤖 AI Tools (10)
         <span style={{fontSize:12,color:'var(--text3)',fontWeight:500,marginLeft:6}}>— Pick a tool</span>
       </div>
-      <div className="tools-grid" style={{gridTemplateColumns:'repeat(5,1fr)'}}>
+      <div className="tools-grid">
         {ALL_TOOLS.map((t,i)=>(
           <div key={t.id} className={`tool-card ${t.color} anim-fadeInUp`}
             style={{animationDelay:`${0.12+i*0.05}s`}}
