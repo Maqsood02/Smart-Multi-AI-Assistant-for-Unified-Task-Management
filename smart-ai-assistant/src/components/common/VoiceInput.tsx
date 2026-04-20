@@ -1,34 +1,22 @@
 // ════════════════════════════════════════════════════════════
 //  VOICE INPUT — Mic button + status indicator
-//  Uses the useSpeechToText hook internally.
-//  Fixed: transcript appends to existing text, not replaces.
+//  Uses the useSpeechToText hook internally
 // ════════════════════════════════════════════════════════════
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSpeechToText } from '../../utils/voice/speechToText';
 
 interface VoiceInputProps {
-  onTranscript: (text: string) => void;   // called with new transcript text
+  onTranscript: (text: string) => void;   // called with final transcript
   disabled?: boolean;
 }
 
 export function VoiceInput({ onTranscript, disabled }: VoiceInputProps) {
   const { transcript, isListening, isSupported, error, startListening, stopListening } = useSpeechToText();
-  const lastTranscriptRef = useRef('');
 
-  // Push transcript to parent whenever it changes (only the new part)
+  // Push transcript to parent whenever it updates
   useEffect(() => {
-    if (transcript && transcript !== lastTranscriptRef.current) {
-      lastTranscriptRef.current = transcript;
-      onTranscript(transcript);
-    }
+    if (transcript) onTranscript(transcript);
   }, [transcript, onTranscript]);
-
-  // Reset ref when listening starts
-  useEffect(() => {
-    if (isListening) {
-      lastTranscriptRef.current = '';
-    }
-  }, [isListening]);
 
   if (!isSupported) {
     return (
@@ -74,16 +62,7 @@ interface VoiceTextareaProps {
 export function VoiceTextarea({
   value, onChange, placeholder, rows = 5, disabled, className, label
 }: VoiceTextareaProps) {
-  // Append voice transcript to current value instead of replacing
-  const handleTranscript = (transcript: string) => {
-    const currentVal = value.trim();
-    if (currentVal) {
-      // Append with a space separator
-      onChange(currentVal + ' ' + transcript);
-    } else {
-      onChange(transcript);
-    }
-  };
+  const handleTranscript = (t: string) => onChange(t);
 
   return (
     <div className="voice-textarea-wrap">

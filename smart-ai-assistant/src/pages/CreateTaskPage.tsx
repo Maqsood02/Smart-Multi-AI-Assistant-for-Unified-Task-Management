@@ -112,7 +112,7 @@ export function CreateTaskPage() {
           </div>
           {!getAnyKeyAvailable()&&(
             <div style={{padding:'12px 16px',background:'rgba(239,68,68,0.07)',border:'1px solid rgba(239,68,68,0.2)',borderRadius:10,fontSize:13,color:'#f87171',marginBottom:18}}>
-              ⚠️ No API key. <span style={{cursor:'pointer',textDecoration:'underline'}} onClick={()=>navigate('settings')}>Go to Settings →</span>
+              ⚠️ No API key. <span style={{cursor:'pointer',textDecoration:'underline'}} onClick={()=>navigate('tools')}>Go to Settings →</span>
             </div>
           )}
           <button className="run-btn" onClick={doRun} disabled={running||!prompt.trim()}>🚀 Run AI Task</button>

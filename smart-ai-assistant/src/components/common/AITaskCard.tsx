@@ -5,11 +5,21 @@ import { useState } from 'react';
 import type { AITask } from '../../types';
 import { formatDate } from '../../utils/helpers';
 import { ALL_TOOLS } from '../../utils/helpers';
-import { copyToClipboard } from '../../utils/helpers/clipboard';
 
 const TYPE_LABEL: Record<string, string> = Object.fromEntries(
   ALL_TOOLS.map(t => [t.id, `${t.icon} ${t.shortName}`])
 );
+
+function copyToClipboard(text: string) {
+  navigator.clipboard?.writeText(text).catch(() => {
+    const el = document.createElement('textarea');
+    el.value = text;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  });
+}
 
 interface Props {
   task:      AITask;

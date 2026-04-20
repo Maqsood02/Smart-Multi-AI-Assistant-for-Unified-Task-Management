@@ -14,9 +14,16 @@ import { Auth } from '../../data/auth';
 import { DB } from '../../data/db';
 import { generateTextWithFallback, getAnyKeyAvailable } from '../../services/aiGateway';
 import { useToasts, ToastContainer } from '../../components/common/Toast';
-import { copyToClipboard } from '../../utils/helpers/clipboard';
 
 interface ToolPageProps { config: ToolConfig; }
+
+function copyToClipboard(text: string) {
+  navigator.clipboard?.writeText(text).catch(() => {
+    const el = document.createElement('textarea');
+    el.value = text; document.body.appendChild(el); el.select();
+    document.execCommand('copy'); document.body.removeChild(el);
+  });
+}
 
 export function ToolPage({ config }: ToolPageProps) {
   const { navigate, refresh } = useApp();
@@ -35,7 +42,7 @@ export function ToolPage({ config }: ToolPageProps) {
 
   const handleGenerate = async () => {
     if (!input.trim()) { toast('⚠️ Enter or speak your request first.', 'error'); return; }
-    if (!getAnyKeyAvailable()) { toast('⚙️ No API key. Go to ⚙️ Settings.', 'error'); navigate('settings'); return; }
+    if (!getAnyKeyAvailable()) { toast('⚙️ No API key. Go to ⚙️ Settings.', 'error'); navigate('tools'); return; }
 
     setRunning(true); setOutput(''); setSaved(false); setStatus({ message: 'Starting AI…' });
 

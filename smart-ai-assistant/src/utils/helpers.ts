@@ -1,20 +1,20 @@
 // ════════════════════════════════════════════════════════════
 //  HELPERS — Pure utility functions
-//  Tool configs re-exported from toolConfig.ts (single source of truth)
+//  Tool config now lives in src/data/toolConfig.ts
 // ════════════════════════════════════════════════════════════
-import type { TaskType, ToolConfig, Page } from '../types';
 
-// Re-export tool config from canonical source
-export { TOOL_CONFIGS as ALL_TOOLS, TOOL_MAP, getToolConfig, TOOL_COLOR_CLASSES } from './toolConfig';
+// Re-export everything from toolConfig for backward compat
+export {
+  ALL_TOOLS, TOOL_MAP, TOOL_COLOR_CLASSES, getToolConfig
+} from '../data/toolConfig';
+export type { ToolConfig } from '../data/toolConfig';
 
 export function initials(name: string): string {
   return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 }
 
 export function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('en-US', {
-    month: 'short', day: 'numeric', year: 'numeric'
-  });
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 export function formatDateFull(iso: string): string {

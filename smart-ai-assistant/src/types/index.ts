@@ -1,55 +1,22 @@
-// ════════════════════════════════════════════════════════════
-//  TYPES — Smart Multi-AI Assistant
-// ════════════════════════════════════════════════════════════
-
 export type TaskType =
-  | 'content'
-  | 'code'
-  | 'image'
-  | 'task'
-  | 'story'
-  | 'summary'
-  | 'imageSummary'
-  | 'codeCheck'
-  | 'humanize'
-  | 'grammar'
-  | 'general';
+  | 'content' | 'code' | 'image' | 'task'
+  | 'story' | 'summary' | 'imageSummary'
+  | 'codeCheck' | 'humanize' | 'grammar'
+  | 'analysis' | 'general';
 
 export type Priority   = 'high' | 'medium' | 'low' | '';
 export type TaskStatus = 'pending' | 'completed';
 
 export type Page =
-  | 'login'
-  | 'register'
-  | 'dashboard'
-  | 'tools'
-  | 'tasks'
-  | 'create-task'
-  | 'history'
-  | 'settings'
-  | 'tool-content'
-  | 'tool-code'
-  | 'tool-image'
-  | 'tool-task'
-  | 'tool-story'
-  | 'tool-summary'
-  | 'tool-imageSummary'
-  | 'tool-codeCheck'
-  | 'tool-humanize'
-  | 'tool-grammar';
+  | 'login' | 'register' | 'dashboard' | 'tools'
+  | 'tasks' | 'create-task' | 'history'
+  | 'tool-content' | 'tool-code' | 'tool-image' | 'tool-task'
+  | 'tool-story' | 'tool-summary' | 'tool-imageSummary'
+  | 'tool-codeCheck' | 'tool-humanize' | 'tool-grammar'
+  | 'quiz';
 
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-}
-
-export interface Session {
-  id: number;
-  name: string;
-  email: string;
-}
+export interface User    { id: number; name: string; email: string; password: string; }
+export interface Session { id: number; name: string; email: string; }
 
 export interface AITask {
   id: number;
@@ -62,31 +29,26 @@ export interface AITask {
   dueDate: string;
   status: TaskStatus;
   createdAt: string;
-  provider?: string;         // which AI provider generated this
+  provider?: string;
 }
 
 export interface ToolConfig {
-  id: TaskType;
-  page: Page;
-  icon: string;
-  name: string;
-  shortName: string;
+  id:          TaskType;
+  page:        Page;
+  icon:        string;
+  name:        string;
+  shortName:   string;
   description: string;
-  inputLabel: string;
+  inputLabel:  string;
   inputPlaceholder: string;
   outputLabel: string;
-  color: string;            // CSS color class
-  category: 'existing' | 'new';
-}
-
-export interface AIProviderStatus {
-  name: string;
-  available: boolean;
-  disabledUntil?: number;
+  color:       string;
+  category:    'existing' | 'new';
+  handler:     'text' | 'image';
 }
 
 export interface GenerationStatus {
-  message: string;
+  message:   string;
   provider?: string;
-  attempt?: number;
+  attempt?:  number;
 }

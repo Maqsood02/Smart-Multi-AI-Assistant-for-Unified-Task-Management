@@ -1,14 +1,19 @@
+'use strict';
 const router  = require('express').Router();
 const aiCtrl  = require('../controllers/aiController');
 const auth    = require('../middleware/authMiddleware');
 
-// POST /api/ai/generate-text  — text generation
-router.post('/generate-text',   auth, aiCtrl.generateText);
-// POST /api/ai/generate-image — image generation
-router.post('/generate-image',  auth, aiCtrl.generateImage);
-// POST /api/ai/generate       — backward-compatible
-router.post('/generate',        auth, aiCtrl.generate);
-// POST /api/ai/generate/stream — streaming (future)
+// ── Text generation ───────────────────────────────────────
+// POST /api/ai/generate       — alias kept for backward compat
+// POST /api/ai/generate-text  — recommended endpoint
+router.post('/generate',       auth, aiCtrl.generateText);
+router.post('/generate-text',  auth, aiCtrl.generateText);
+
+// ── Image generation ─────────────────────────────────────
+// POST /api/ai/generate-image
+router.post('/generate-image', auth, aiCtrl.generateImage);
+
+// ── Streaming (future) ────────────────────────────────────
 router.post('/generate/stream', auth, aiCtrl.generateStream);
 
 module.exports = router;
